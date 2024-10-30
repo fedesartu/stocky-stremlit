@@ -64,7 +64,7 @@ def generate_analysis_excel(all_stocks, selected_stocks, history_period):
                                      'Dividends Date', 'Link', 'Chofa', 'Fede'])
 
     now = datetime.datetime.today().strftime('%Y-%m-%d-%H-%M-%S')
-    filename = f'./stock_analysis_results/StockAnalysis_{now}.xlsx'
+    filename = Path.cwd() / "data" / f'StockAnalysis_{now}.xlsx'
 
     df.to_excel(filename)
 

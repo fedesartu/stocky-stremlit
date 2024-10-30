@@ -1,5 +1,4 @@
 import streamlit as st
-
 from yahoo.stock_analysis import get_stocks, fetch_periods_intervals, generate_analysis_excel
 
 st.set_page_config(
@@ -21,11 +20,20 @@ selected_stocks = st.sidebar.multiselect("Choose a stock", stocks)
 st.sidebar.markdown("### **Select period**")
 period = st.sidebar.selectbox("Choose a period", list(periods.keys()))
 
+# Generate the file and automatically provide the download link
 if st.sidebar.button("**Generate**"):
-    download = generate_analysis_excel(stocks, selected_stocks, period)
-
-if st.sidebar.button("**Download**"):
+    file_path = generate_analysis_excel(stocks, selected_stocks, period)
     
+    if file_path:  # Check if the file path is not empty
+        with open(file_path, 'rb') as file:
+            st.sidebar.download_button(
+                label="Download File",
+                data=file,
+                file_name="analysis.xlsx",  # Use the name of the file
+                mime='application/octet-stream'  # Change this depending on the file type
+            )
+    else:
+        st.error("No file generated.")
 
 #####Sidebar End#####
 

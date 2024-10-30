@@ -1,4 +1,4 @@
-streamlit==1.33.0
+streamlit==1.39.0
 annotated-types==0.7.0
 anyio==4.4.0
 beautifulsoup4==4.12.3
@@ -50,7 +50,4 @@ tzdata==2024.1
 urllib3==2.2.2
 uvicorn==0.30.3
 uvloop==0.19.0
-watchfiles==0.22.0
-webencodings==0.5.1
-websockets==12.0
 yfinance==0.2.41
