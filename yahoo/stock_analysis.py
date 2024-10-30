@@ -33,7 +33,7 @@ def generate_analysis_excel(all_stocks, selected_stocks, history_period):
         selected_stocks = all_stocks
     data = []
     error_stocks = []
-    for stock_code in all_stocks:
+    for stock_code in selected_stocks:
         print("Analying " + stock_code)
         link = f'=HYPERLINK("https://finance.yahoo.com/quote/{stock_code}?.tsrc=fin-srch")'
 
@@ -67,6 +67,8 @@ def generate_analysis_excel(all_stocks, selected_stocks, history_period):
     filename = f'./stock_analysis_results/StockAnalysis_{now}.xlsx'
 
     df.to_excel(filename)
+
+    return filename
 
 
 def get_info_data_or_default(key, info):

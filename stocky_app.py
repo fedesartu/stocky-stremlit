@@ -22,7 +22,10 @@ st.sidebar.markdown("### **Select period**")
 period = st.sidebar.selectbox("Choose a period", list(periods.keys()))
 
 if st.sidebar.button("**Generate**"):
-    generate_analysis_excel(stocks, selected_stocks, period)
+    download = generate_analysis_excel(stocks, selected_stocks, period)
+
+if st.sidebar.button("**Download**"):
+    
 
 #####Sidebar End#####
 
