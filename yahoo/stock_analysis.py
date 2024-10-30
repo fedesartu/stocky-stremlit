@@ -1,24 +1,24 @@
 import yfinance as yf
 import pandas as pd
+import streamlit as st
 import datetime
 from pathlib import Path
+from gmail.email_sender import send_email
 
 def fetch_periods_intervals():
-    periods = {
-        "1d": ["1m", "2m", "5m", "15m", "30m", "60m", "90m"],
-        "5d": ["1m", "2m", "5m", "15m", "30m", "60m", "90m"],
-        "1mo": ["30m", "60m", "90m", "1d"],
-        "3mo": ["1d", "5d", "1wk", "1mo"],
-        "6mo": ["1d", "5d", "1wk", "1mo"],
-        "1y": ["1d", "5d", "1wk", "1mo"],
-        "2y": ["1d", "5d", "1wk", "1mo"],
-        "5y": ["1d", "5d", "1wk", "1mo"],
-        "10y": ["1d", "5d", "1wk", "1mo"],
-        "max": ["1d", "5d", "1wk", "1mo"],
-    }
-
-    return periods
-
+    return [
+        "1d",
+        "5d",
+        "1mo",
+        "3mo",
+        "6mo",
+        "1y",
+        "2y",
+        "5y",
+        "10y",
+        "ytd",
+        "max",
+    ]
 
 
 def get_stocks():
@@ -28,7 +28,7 @@ def get_stocks():
     return stocks
 
 
-def generate_analysis_excel(all_stocks, selected_stocks, history_period):
+def generate_analysis_excel(all_stocks, selected_stocks, history_period, email_to, key):
     if (len(selected_stocks) == 0):
         selected_stocks = all_stocks
     data = []
@@ -68,7 +68,10 @@ def generate_analysis_excel(all_stocks, selected_stocks, history_period):
 
     df.to_excel(filename)
 
-    return filename
+    send_email(email_to, key, filename)
+
+    if len(error_stocks) > 0:
+        st.error("The following stocks cound not be analyzed: " + ", ".join(s for s in error_stocks))
 
 
 def get_info_data_or_default(key, info):
